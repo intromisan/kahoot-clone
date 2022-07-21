@@ -15,12 +15,23 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  email String
+  email String @unique
   hash  String
+
+  games Game[]
+
+  @@map("users")
 }
 
 model Game {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  hostId Int
+  host   User    @relation(fields: [hostId], references: [id])
+  pin    String
+  isLive Boolean @default(false)
+
+  @@map("games")
 }
